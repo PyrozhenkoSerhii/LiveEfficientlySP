@@ -1,0 +1,18 @@
+export const mockGoals = [
+  {id: 1, text: 'Text1'},
+  {id: 2, text: 'Text2'},
+  {id: 3, text: 'Text3'},
+  {id: 4, text: 'Text4'},
+  {id: 11, text: 'Text1'},
+  {id: 21, text: 'Text2'},
+  {id: 31, text: 'Text3'},
+  {id: 41, text: 'Text4'},
+  {id: 12, text: 'Text1'},
+  {id: 22, text: 'Text2'},
+  {id: 32, text: 'Text3'},
+  {id: 42, text: 'Text4'},
+  {id: 13, text: 'Text1'},
+  {id: 23, text: 'Text2'},
+  {id: 33, text: 'Text3'},
+  {id: 43, text: 'Text4'},
+];
