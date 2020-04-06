@@ -2,6 +2,7 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import {View} from 'react-native';
+import {Provider as PaperProvider} from 'react-native-paper';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -17,52 +18,54 @@ const HomeStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const App = () => (
-  <NavigationContainer>
-    <View style={{flex: 1}}>
-      <Tab.Navigator
-        screenOptions={({route}) => ({
-          tabBarIcon: ({focused, color, size}) => (
-            <Icon
-              name={route.name === 'Home' ? 'home' : 'gears'}
-              size={size}
-              color={color}
-            />
-          ),
-        })}
-        tabBarOptions={{
-          activeTintColor: '#f4511e',
-          inactiveTintColor: 'gray',
-        }}>
-        <Tab.Screen name="Home">
-          {() => (
-            <HomeStack.Navigator
-              screenOptions={{
-                headerStyle: {backgroundColor: '#f4511e', height: 60},
-                headerTintColor: '#fff',
-                headerTitleStyle: {fontWeight: 'bold'},
-              }}>
-              <HomeStack.Screen
-                name="GoalList"
-                component={GoalListScreen}
-                options={{title: 'Your goals'}}
+  <PaperProvider>
+    <NavigationContainer>
+      <View style={{flex: 1}}>
+        <Tab.Navigator
+          screenOptions={({route}) => ({
+            tabBarIcon: ({focused, color, size}) => (
+              <Icon
+                name={route.name === 'Home' ? 'home' : 'gears'}
+                size={size}
+                color={color}
               />
-              <HomeStack.Screen
-                name="GoalDetails"
-                component={GoalDetailsScreen}
-                options={{title: 'Details of the goal'}}
-              />
-              <HomeStack.Screen
-                name="GoalForm"
-                component={GoalFormScreen}
-                options={{title: 'Create your goal'}}
-              />
-            </HomeStack.Navigator>
-          )}
-        </Tab.Screen>
-        <Tab.Screen name="Settings">{() => <SettingScreen />}</Tab.Screen>
-      </Tab.Navigator>
-    </View>
-  </NavigationContainer>
+            ),
+          })}
+          tabBarOptions={{
+            activeTintColor: '#f4511e',
+            inactiveTintColor: 'gray',
+          }}>
+          <Tab.Screen name="Home">
+            {() => (
+              <HomeStack.Navigator
+                screenOptions={{
+                  headerStyle: {backgroundColor: '#f4511e', height: 60},
+                  headerTintColor: '#fff',
+                  headerTitleStyle: {fontWeight: 'bold'},
+                }}>
+                <HomeStack.Screen
+                  name="GoalList"
+                  component={GoalListScreen}
+                  options={{title: 'Your goals'}}
+                />
+                <HomeStack.Screen
+                  name="GoalDetails"
+                  component={GoalDetailsScreen}
+                  options={{title: 'Details of the goal'}}
+                />
+                <HomeStack.Screen
+                  name="GoalForm"
+                  component={GoalFormScreen}
+                  options={{title: 'Create your goal'}}
+                />
+              </HomeStack.Navigator>
+            )}
+          </Tab.Screen>
+          <Tab.Screen name="Settings">{() => <SettingScreen />}</Tab.Screen>
+        </Tab.Navigator>
+      </View>
+    </NavigationContainer>
+  </PaperProvider>
 );
 
 export default App;
