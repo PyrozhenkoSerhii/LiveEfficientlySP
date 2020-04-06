@@ -7,7 +7,7 @@ import {styles} from './styles';
 export const GoalItemComponent = ({route, goal, onDelete, onPress}) => (
   <TouchableOpacity onPress={onPress(goal.id)}>
     <View style={styles.container}>
-      <Text style={styles.text}>{goal.text}</Text>
+      <Text style={styles.text}>{goal.title}</Text>
       <Icon
         name="remove"
         size={26}

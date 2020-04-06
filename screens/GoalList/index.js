@@ -1,23 +1,13 @@
 import React, {useState, useLayoutEffect, useEffect} from 'react';
 import {View, FlatList} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
-import firestore from '@react-native-firebase/firestore';
+import firestore, {firebase} from '@react-native-firebase/firestore';
 
 import {GoalItemComponent} from './components/GoalItem';
 import {mockGoals} from '../../mocks/goals';
 import {styles} from './styles';
 
 export const GoalListScreen = ({navigation}) => {
-  const [goals, setGoals] = useState(mockGoals);
-
-  useEffect(() => {
-    firestore().collection('test').get().then(console.log).catch(console.log);
-  }, []);
-
-  const onAdd = () => {
-    navigation.navigate('GoalForm');
-  };
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -28,8 +18,33 @@ export const GoalListScreen = ({navigation}) => {
     });
   });
 
+  const [goals, setGoals] = useState([]);
+
+  useEffect(() => {
+    firestore()
+      .collection('test')
+      .onSnapshot(
+        (querySnapshot) => {
+          setGoals(
+            querySnapshot.docs.map((doc) => {
+              const data = doc.data();
+              return {
+                id: doc.id,
+                title: data.title,
+              };
+            }),
+          );
+        },
+        (err) => console.log(err),
+      );
+  }, []);
+
+  const onAdd = () => {
+    navigation.navigate('GoalForm');
+  };
+
   const onDelete = (id) => () => {
-    setGoals((prevGoals) => prevGoals.filter((goal) => goal.id !== id));
+    firestore().collection('test').doc(id).delete();
   };
 
   const onPress = (id) => () => {

@@ -4,21 +4,32 @@ import {Button, TextInput} from 'react-native-paper';
 
 import firestore from '@react-native-firebase/firestore';
 
-export const GoalFormScreen = () => {
+export const GoalFormScreen = ({navigation}) => {
   const [formData, setFormData] = useState({
     title: '',
   });
 
-  const onPress = () => {};
+  const onSubmit = (): void => {
+    firestore().collection('test').doc().set({title: formData.title});
+
+    navigation.navigate('GoalList');
+  };
+
+  const onPress = (id: string, text: string): void => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [id]: text,
+    }));
+  };
 
   return (
     <View>
       <TextInput
         label="title"
         value={formData.title}
-        onChange={(text) => setFormData(text)}
+        onChangeText={(text) => onPress('title', text)}
       />
-      <Button mode="contained" onPress={onPress}>
+      <Button mode="contained" onPress={onSubmit}>
         Submit
       </Button>
     </View>
