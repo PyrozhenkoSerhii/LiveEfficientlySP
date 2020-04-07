@@ -1,11 +1,13 @@
-import React, {useState, useLayoutEffect, useEffect} from 'react';
-import {View, FlatList} from 'react-native';
+import React, {useLayoutEffect} from 'react';
+import {View, FlatList, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
-import firestore, {firebase} from '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
 
+import {useSubscribeToCollection} from '../../services/useSubscribeToCollection';
 import {GoalItemComponent} from './components/GoalItem';
-import {mockGoals} from '../../mocks/goals';
 import {styles} from './styles';
+
+const fields = ['title'];
 
 export const GoalListScreen = ({navigation}) => {
   useLayoutEffect(() => {
@@ -18,26 +20,7 @@ export const GoalListScreen = ({navigation}) => {
     });
   });
 
-  const [goals, setGoals] = useState([]);
-
-  useEffect(() => {
-    firestore()
-      .collection('test')
-      .onSnapshot(
-        (querySnapshot) => {
-          setGoals(
-            querySnapshot.docs.map((doc) => {
-              const data = doc.data();
-              return {
-                id: doc.id,
-                title: data.title,
-              };
-            }),
-          );
-        },
-        (err) => console.log(err),
-      );
-  }, []);
+  const {data: goals, error} = useSubscribeToCollection('test', fields);
 
   const onAdd = () => {
     navigation.navigate('GoalForm');
@@ -50,6 +33,15 @@ export const GoalListScreen = ({navigation}) => {
   const onPress = (id) => () => {
     navigation.navigate('GoalDetails', {goalId: id});
   };
+
+  if (error) {
+    console.log(error);
+    return (
+      <View>
+        <Text>Something went wrong</Text>
+      </View>
+    );
+  }
 
   return (
     <View>
