@@ -2,7 +2,7 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import {View} from 'react-native';
-import {Provider as PaperProvider} from 'react-native-paper';
+import {ThemeProvider} from 'react-native-elements';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -18,7 +18,7 @@ const HomeStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const App = () => (
-  <PaperProvider>
+  <ThemeProvider>
     <NavigationContainer>
       <View style={{flex: 1}}>
         <Tab.Navigator
@@ -65,7 +65,7 @@ const App = () => (
         </Tab.Navigator>
       </View>
     </NavigationContainer>
-  </PaperProvider>
+  </ThemeProvider>
 );
 
 export default App;

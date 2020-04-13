@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {View} from 'react-native';
-import {Button, TextInput} from 'react-native-paper';
+import {View, Button, TextInput} from 'react-native';
 
 import firestore from '@react-native-firebase/firestore';
 
@@ -25,13 +24,11 @@ export const GoalFormScreen = ({navigation}) => {
   return (
     <View>
       <TextInput
-        label="title"
+        placeholder="title"
         value={formData.title}
         onChangeText={(text) => onPress('title', text)}
       />
-      <Button mode="contained" onPress={onSubmit}>
-        Submit
-      </Button>
+      <Button title="Submit" onPress={onSubmit} />
     </View>
   );
 };
